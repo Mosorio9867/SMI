@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {filter, takeUntil} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import * as _ from 'lodash';
 
@@ -8,6 +8,7 @@ import {FuseConfigService} from '@fuse/services/config.service';
 import {FuseSidebarService} from '@fuse/components/sidebar/sidebar.service';
 
 import {navigation} from 'app/navigation/navigation';
+import {ActivatedRoute, NavigationEnd, Router} from "@angular/router";
 
 @Component({
     selector: 'toolbar',
@@ -21,8 +22,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     rightNavbar: boolean;
     hiddenNavbar: boolean;
     navigation: any;
-    selectedLanguage: any;
-    userStatusOptions: any[];
+    currentTitle: string;
 
     // Private
     private _unsubscribeAll: Subject<any>;
@@ -37,41 +37,13 @@ export class ToolbarComponent implements OnInit, OnDestroy {
     constructor(
         private _fuseConfigService: FuseConfigService,
         private _fuseSidebarService: FuseSidebarService,
-        private _translateService: TranslateService
+        private _activatedRoute: ActivatedRoute,
     ) {
-        // Set the defaults
-        this.userStatusOptions = [
-            {
-                'title': 'Online',
-                'icon': 'icon-checkbox-marked-circle',
-                'color': '#4CAF50'
-            },
-            {
-                'title': 'Away',
-                'icon': 'icon-clock',
-                'color': '#FFC107'
-            },
-            {
-                'title': 'Do not Disturb',
-                'icon': 'icon-minus-circle',
-                'color': '#F44336'
-            },
-            {
-                'title': 'Invisible',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#BDBDBD'
-            },
-            {
-                'title': 'Offline',
-                'icon': 'icon-checkbox-blank-circle-outline',
-                'color': '#616161'
-            }
-        ];
-
         this.navigation = navigation;
 
         // Set the private defaults
         this._unsubscribeAll = new Subject();
+
     }
 
     // -----------------------------------------------------------------------------------------------------
@@ -91,6 +63,7 @@ export class ToolbarComponent implements OnInit, OnDestroy {
                 this.hiddenNavbar = settings.layout.navbar.hidden === true;
             });
 
+        this.currentTitle = this._activatedRoute.snapshot.data.title;
     }
 
     /**

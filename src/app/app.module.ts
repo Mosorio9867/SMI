@@ -29,6 +29,7 @@ const appRoutes: Routes = [
         path: 'pages',
         // canActivate: [AuthGuardService],
         loadChildren: () => import('./main/pages/pages.module').then(m => m.PagesModule),
+        data: <any>{title: 'Pages', breadcrumb: 'Pages', claim: 'default'},
     },
     {
         path: '**',
@@ -44,7 +45,7 @@ const appRoutes: Routes = [
         BrowserModule,
         BrowserAnimationsModule,
         HttpClientModule,
-        RouterModule.forRoot(appRoutes),
+        RouterModule.forRoot(appRoutes, {useHash: true}),
 
         TranslateModule.forRoot(),
 
@@ -64,6 +65,9 @@ const appRoutes: Routes = [
 
         // App modules
         LayoutModule,
+    ],
+    exports: [
+        AppComponent
     ],
     bootstrap: [
         AppComponent

@@ -1,7 +1,4 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-import {FormBuilder} from '@angular/forms';
-
-import {FuseConfigService} from '@fuse/services/config.service';
 import {fuseAnimations} from '@fuse/animations';
 
 @Component({
@@ -13,10 +10,7 @@ import {fuseAnimations} from '@fuse/animations';
 })
 export class DashboardComponent implements OnInit {
 
-    constructor(
-        private _fuseConfigService: FuseConfigService,
-        private _formBuilder: FormBuilder
-    ) {
+    constructor() {
     }
 
     ngOnInit(): void {
