@@ -1,3 +1,68 @@
-<div fxFlex="100" fxLayout="column" class="page">
-    Medicos
+<div fxFlex="100" fxLayout="column" class="page" fxLayoutGap="12px">
+    <!--    Filtros-->
+    <mat-card fxLayout="column" class="mat-elevation-z3">
+        <mat-card-header>
+            <mat-card-title> Filtros</mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row wrap" fxLayout.lt-md="column">
+            <form [formGroup]="form" fxFlex="100">
+                <mat-form-field fxFlex="25" fxFlex.lt-md="100" appearance="outline">
+                    <mat-label> Buscar por nombre</mat-label>
+                    <input matInput type="text" placeholder="Ingrese minimo 3 caracteres..." formControlName="search">
+                    <mat-icon
+                            (click)="form.value.search === null || form.value.search === '' ? null : form.controls['search'].setValue(null)"
+                            matSuffix> {{ form.value.search === null || form.value.search === '' ? 'search' : 'close' }}</mat-icon>
+                </mat-form-field>
+            </form>
+        </mat-card-content>
+        <mat-card-actions fxLayout="row" fxLayoutAlign="end center">
+            <button mat-flat-button type="button" color="primary">
+                <mat-icon> refresh</mat-icon>
+                Actualizar
+            </button>
+        </mat-card-actions>
+    </mat-card>
+    <!--    Contenido-->
+    <mat-card fxLayout="column" class="mat-elevation-z3">
+        <mat-card-header>
+            <mat-card-title> Medicos</mat-card-title>
+            <mat-card-subtitle> Listado de medicos contratados</mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content fxLayout="column">
+            <table mat-table fxFlex="100" [dataSource]="dataSource">
+                <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef> Nombre</th>
+                    <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                </ng-container>
+                <ng-container matColumnDef="identification">
+                    <th mat-header-cell *matHeaderCellDef> identificacion</th>
+                    <td mat-cell *matCellDef="let element"> {{element.identification}} </td>
+                </ng-container>
+                <ng-container matColumnDef="age">
+                    <th mat-header-cell *matHeaderCellDef> Edad</th>
+                    <td mat-cell *matCellDef="let element"> {{element.age}} </td>
+                </ng-container>
+                <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef></th>
+                    <td mat-cell *matCellDef="let element" fxLayout="row" fxLayoutAlign="center center">
+                        <button mat-icon-button type="button" matTooltip="Ver">
+                            <mat-icon> visibility</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button" (click)="element.active = !element.active"
+                                [matTooltip]="element.active ? 'Activo' : 'Inactivo'">
+                            <mat-icon
+                                    [color]="element.active ? 'accent' : 'warn'"> {{ element.active ? 'toggle_on' : 'toggle_off' }}</mat-icon>
+                        </button>
+                        <button mat-icon-button type="button" matTooltip="Pacientes">
+                            <mat-icon> airline_seat_flat</mat-icon>
+                        </button>
+                    </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+
+            <mat-paginator fxFlex="100" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </mat-card-content>
+    </mat-card>
 </div>
