@@ -7,12 +7,8 @@ const pagesRoutes: Routes = [
         loadChildren: () => import('./dashboard/dashboard.module').then(m => m.dashboardModule),
     },
     {
-        path: 'doctors',
-        loadChildren: () => import('./doctors/doctors.module').then(m => m.DoctorsModule),
-    },
-    {
-        path: 'patients',
-        loadChildren: () => import('./patients/patients.module').then(m => m.PatientsModule),
+        path: 'person',
+        loadChildren: () => import('./person/person.module').then(m => m.PersonModule),
     }
 ];
 

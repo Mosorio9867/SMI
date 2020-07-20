@@ -14,18 +14,11 @@ export const navigation: FuseNavigation[] = [
                 url: '/pages/dashboard'
             },
             {
-                id: 'doctors',
-                title: 'Medicos',
+                id: 'person',
+                title: 'Personas',
                 type: 'item',
                 icon: 'person',
-                url: '/pages/doctors'
-            },
-            {
-                id: 'patients',
-                title: 'Pacientes',
-                type: 'item',
-                icon: 'airline_seat_flat',
-                url: '/pages/patients'
+                url: '/pages/person/list'
             }
         ]
     }
